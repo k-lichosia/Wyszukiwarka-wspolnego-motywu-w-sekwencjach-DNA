@@ -1,30 +1,34 @@
-# Wyszukiwarka wspólnego motywu w sekwencjach: podejście oparte na grafach
+# DNA Motif Finder: A Graph-Based Approach
 
-### Algorytm wyszukiwania wspólnych motywów DNA w sekwencjach biologicznych z uwzględnieniem jakości odczytu (Phred score).
+### An algorithm for discovering common DNA motifs in biological sequences, integrating read quality analysis (Phred scores).
 
-## O projekcie
-Ten program w C++ służy do identyfikacji powtarzających się podciągów (motywów) w wielu sekwencjach DNA jednocześnie. Projekt wykorzystuje teorię grafów, reprezentując potencjalne motywy jako wierzchołki, a ich podobieństwo jako krawędzie. Celem jest znalezienie **kliki**, która reprezentuje motyw obecny w każdym z badanych łańcuchów.
+## About the Project
+This C++ program identifies recurring substrings (motifs) across multiple DNA sequences simultaneously. The project leverages graph theory, representing potential motifs as vertices and their similarities as edges. The primary objective is to find a **clique**, which represents a specific motif present in every analyzed sequence.
 
-## Główne funkcjonalności
-- **Filtr Jakości (Quality Control):** Program wczytuje pliki `.qual` i usuwa nukleotydy o niskiej wiarygodności odczytu (poniżej progu zdefiniowanego przez użytkownika).
-- **Pozycjonowanie nukleotydów:** Zachowuje oryginalną numerację pozycji w sekwencji, nawet po usunięciu słabych ogniw.
-- **Optymalizacja grafu (Hash Maps):** Budowa grafu wykorzystuje mapy hashujące (`unordered_map`), co przyspiesza łączenie identycznych oligonukleotydów.
-- **Detekcja Kliki:** Algorytm szuka zestawu połączonych wierzchołków, z których każdy pochodzi z innej sekwencji wejściowej.
-- **Walidacja biologiczna:** Uwzględnia dystans fizyczny między nukleotydami (parametr `10 * dl_podciag`).
+## Key Features
+- **Quality Control (QC) Filter:** The program processes `.qual` file and discards nucleotides with low reliability scores (below a user-defined threshold).
+- **Nucleotide Positioning:** Maintains original sequence indexing even after filtering out low-quality bases, ensuring biological accuracy.
+- **Graph Optimization (Hash Maps):** Graph construction utilizes (`unordered_map`) to drastically accelerate the connection process between identical oligonucleotides.
+- **Clique Detection:** The algorithm identifies a set of interconnected vertices where each vertex originates from a different input sequence.
+- **Biological Validation:** Accounts for the physical distance between nucleotides using a proximity parameter (`10 * dl_podciag`).
 
-## Technologie
-- **Język:** C++
-- **Struktury danych:** Grafy (listy sąsiedztwa), Wektory, Mapy asocjacyjne.
-- **Algorytmy:** Sortowanie oparte na stopniu wierzchołka, znajdowanie kliki w grafie rzadkim.
+## Technologies
+- **Language:** C++
+- **Data Structures:** Graphs (adjacency lists), Vectors, Associative Maps (Hash Maps).
+- **Algorithms:** Degree-based vertex sorting, graph clique detection.
 
-## Struktura plików wejściowych
-Program wymaga dwóch plików w tym samym katalogu:
-1. `sekwencje.fasta` – plik z sekwencjami DNA w formacie FASTA (dostępny przykładowy)
-2. `sekwencje.qual` – plik z wartościami jakości (Phred scores) dla każdej bazy (dostępny przykładowy)
+## Input File Structure
+The program requires two files in the same directory:
+1. `sekwencje.fasta` – DNA sequences in FASTA format (example available)
+2. `sekwencje.qual` – Quality values (Phred scores) for each base (example available)
 
-## Kompilacja i uruchomienie
+## Compilation and Execution
 
-### Kompilacja:
-Użyj kompilatora `g++` (zalecana flaga optymalizacji `-O3` dla dużych zbiorów danych):
+### Compilation:
+Use the `g++` compiler (the `-O3` optimization flag is highly recommended for large datasets):
 ```bash
 g++ -O3 main.cpp -o motif_finder
+```
+### Execution:
+```bash
+./motif_finder
